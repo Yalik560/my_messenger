@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мій Месенджер</title>
+
+    {# Додаємо іконку, хоча її відсутність не критична #}
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    {# Перевірте, що шлях до CSS коректний #}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {# Перевірте, що шлях до Socket.IO CDN коректний #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+</head>
+<body data-username="{{ current_username }}">
+    <div class="main-layout"> 
+        
+        <div class="users-panel"> 
+            <h2>Користувачі</h2>
+            <ul id="userList">
+                {% for user_name in all_users %}
+                    {% if user_name != current_username %} {# Не показуємо самого себе в списку #}
+                        <li data-username="{{ user_name }}" class="{% if user_name in online_users %}online{% else %}offline{% endif %}">
+                            {{ user_name }}
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="chat-panel"> 
+            <div id="welcomeScreen" class="welcome-screen active">
+                <h2>Ласкаво просимо, {{ current_username }}!</h2>
+                <p>Будь ласка, оберіть користувача зі списку зліва, щоб розпочати приватний чат.</p>
+            </div>
+
+            <div id="privateChat" class="private-chat-area">
+                <h1 id="chatHeader"></h1> 
+                <div id="messages" class="messages-box">
+                    </div>
+                <div class="input-area">
+                    <input type="text" id="messageInput" placeholder="Напишіть повідомлення..." autofocus>
+                    <button onclick="sendMessage()">Надіслати</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Перевірте, що шлях до JS коректний #}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

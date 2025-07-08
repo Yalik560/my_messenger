@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Увійти до Месенджера</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* Додаткові стилі, специфічні для сторінки входу */
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .login-container h1 {
+            color: #007bff;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+        .login-container p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .login-container input[type="text"] {
+            width: calc(100% - 30px); /* Adjust for padding */
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #b3e0ff;
+            border-radius: 25px;
+            font-size: 1.1em;
+            box-sizing: border-box;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            border-radius: 25px;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Привіт!</h1>
+        <p>Будь ласка, введіть своє ім'я, щоб увійти до чату.</p>
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+        <form action="{{ url_for('login') }}" method="post">
+            <input type="text" id="usernameInput" name="username" placeholder="Ваше ім'я" required autofocus>
+            <button type="submit">Увійти</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var usernameInput = document.getElementById('usernameInput');
+            if (usernameInput) {
+                // Обробка натискання Enter для відправки форми
+                usernameInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        document.querySelector('form').submit();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
